@@ -93,7 +93,7 @@ namespace ScreenCaptureWinFormCSharp
             if (_nCode >= 0)
             {
                 MouseHook.MouseHookStruct mouseHookStruct = (MouseHook.MouseHookStruct)Marshal.PtrToStructure(_lParam, typeof(MouseHook.MouseHookStruct));
-                if (mouseHookStruct != null && mouseHookStruct.pt.x > 0 && mouseHookStruct.pt.y > 0)
+                if (mouseHookStruct != null)
                 {
                     String strText = "Screen Capture" + "  x = " + mouseHookStruct.pt.x.ToString("d") + " : y = " + mouseHookStruct.pt.y.ToString("d");
                     lblTitle.Text = strText;
