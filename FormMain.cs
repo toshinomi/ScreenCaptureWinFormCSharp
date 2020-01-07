@@ -13,12 +13,18 @@ using GrobalHook;
 
 namespace ScreenCaptureWinFormCSharp
 {
+    /// <summary>
+    /// MainFormのロジック
+    /// </summary>
     public partial class FormMain : Form
     {
         private Point m_mousePoint;
         private static IntPtr m_hHook = IntPtr.Zero;
         MouseHook.HookProcedureDelegate m_proc;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public FormMain()
         {
             InitializeComponent();
@@ -37,6 +43,11 @@ namespace ScreenCaptureWinFormCSharp
             }
         }
 
+        /// <summary>
+        /// タイトルバーマウスダウンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnMouseDownLblTitle(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
@@ -47,6 +58,11 @@ namespace ScreenCaptureWinFormCSharp
             return;
         }
 
+        /// <summary>
+        /// タイトルバーマウスムーブのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">イベントのデータ</param>
         private void OnMouseMoveLblTitle(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
@@ -58,6 +74,11 @@ namespace ScreenCaptureWinFormCSharp
             return;
         }
 
+        /// <summary>
+        /// マウスフックの設定
+        /// </summary>
+        /// <param name="_proc">マウスフックのデリゲート</param>
+        /// <returns>マウスフックの設定結果 成功/失敗</returns>
         private bool SetMouseHook(MouseHook.HookProcedureDelegate _proc)
         {
             bool bResult = true;
@@ -78,6 +99,9 @@ namespace ScreenCaptureWinFormCSharp
             return bResult;
         }
 
+        /// <summary>
+        /// マウスフックの削除
+        /// </summary>
         private void RemoveMouseHook()
         {
             if (MouseHook.UnhookWindowsHookEx(m_hHook) == false)
@@ -88,6 +112,13 @@ namespace ScreenCaptureWinFormCSharp
             return;
         }
 
+        /// <summary>
+        /// マウスフックの削除
+        /// </summary>
+        /// <param name="_nCode">現在のフックプロシージャに渡されたnCode</param>
+        /// <param name="_wParam">現在のフックプロシージャに渡されたwParam</param>
+        /// <param name="_lParam">現在のフックプロシージャに渡されたlParam</param>
+        /// <returns>フックチェーン内の次のフックプロシージャの戻り値</returns>
         private IntPtr MouseHookProc(int _nCode, IntPtr _wParam, IntPtr _lParam)
         {
             if (_nCode >= 0)
@@ -111,6 +142,11 @@ namespace ScreenCaptureWinFormCSharp
             return MouseHook.CallNextHookEx(m_hHook, _nCode, _wParam, _lParam);
         }
 
+        /// <summary>
+        /// 閉じるボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">キー入力イベントのデータ</param>
         private void OnClickBtnClose(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Close the application ?", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
@@ -122,6 +158,11 @@ namespace ScreenCaptureWinFormCSharp
             return;
         }
 
+        /// <summary>
+        /// 最小ボタンのクリックイベント
+        /// </summary>
+        /// <param name="sender">オブジェクト</param>
+        /// <param name="e">キー入力イベントのデータ</param>
         private void OnClickBtnMinimizedIcon(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
